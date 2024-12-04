@@ -8,16 +8,16 @@ type Expression = string[]
 
 const Calculate = (expression: Expression) => {
     const operators = new Map([
-        ['+', (x: number, y:number)=> x+y], 
-        ['-', (x: number, y:number)=> x-y],
         ['*', (x: number, y:number)=> x*y],
         ['/', (x: number, y:number)=> x/y],
+        ['+', (x: number, y:number)=> x+y], 
+        ['-', (x: number, y:number)=> x-y],
     ])
     const operatorsKeys = operators.keys().toArray().map((value)=> "\\"+value).join('')
     
     let result = 0
     const expression2 = expression[0] === '-' ? expression.join('') : ["+", ...expression].join('')
-    const getNumbers = expression2.split(new RegExp('['+operatorsKeys+']', 'gui'))
+    const getNumbers = expression2.split(new RegExp('['+operatorsKeys+'\(\)'+']', 'gui'))
                                   .filter((value)=> value !== "")
                                   .map((value) => parseFloat(value));
     const getOperators = expression2.split(new RegExp('[^'+operatorsKeys+']', 'gui'))
@@ -25,6 +25,13 @@ const Calculate = (expression: Expression) => {
     console.log(getNumbers)
     console.log(getOperators)
     
+    // let numbers2 = []
+    // operators.keys().toArray().forEach((value1) => {
+    //     getOperators.map((value2, index) => {
+    //         if (value1 === value2) index 
+    //     })
+    // })
+
     result = getNumbers.reduce((prevValue, value, index)=>{
         const op = operators.get(getOperators[index])
         let result = 0;
@@ -38,26 +45,28 @@ const Calculate = (expression: Expression) => {
 
 const Calculator = (props: Props) => {
     const [expression, setExpression] = useState<Expression>([])
-    const [result, setResult] = useState("")
+    const [result, setResult] = useState("0")
 
     return (
         <div className="flex flex-col justify-center m-10">
             <h1>Calculator</h1>
-            <div>{expression.join("") + result} :output</div>
+            <div>{expression.join("") + "=" + result} :output</div>
             <div className="grid grid-cols-4">
                 
                 <Button onClick={() => {
                     setExpression([])
-                    setResult("")
+                    setResult("0")
                 }}>AC</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => prevExpression.filter((value, index)=> index != (prevExpression.length-1)))
+                    setExpression(prevExpression => prevExpression.filter((_, index)=> index != (prevExpression.length-1)))
                 }}>del</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => [...prevExpression, "%"])
+                    setResult(prevResult => prevResult.includes("%") 
+                    ? "" + Calculate(expression)
+                    : parseFloat(prevResult)/100 + "%")
                 }}>%</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => [...prevExpression, "/"])
+                    setExpression(prevExpression => ['(', ...prevExpression, ')', "/"])
                 }}>/</Button>
                 
                 <Button onClick={() => {
@@ -70,7 +79,7 @@ const Calculator = (props: Props) => {
                     setExpression(prevExpression => [...prevExpression, "3"])
                 }}>3</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => [...prevExpression, "*"])
+                    setExpression(prevExpression => ['(', ...prevExpression, ')', "*"])
                 }}>*</Button>
                 
                 <Button onClick={() => {
@@ -113,7 +122,7 @@ const Calculator = (props: Props) => {
                     setExpression(prevExpression => [...prevExpression, "."])
                 }}>.</Button>
                 <Button onClick={
-                    () => setResult("=" + Calculate(expression))
+                    () => setResult("" + Calculate(expression))
                 }>=</Button>
                 
             </div>
