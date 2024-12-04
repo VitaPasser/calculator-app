@@ -38,23 +38,25 @@ const Calculate = (expression: Expression) => {
 
 const Calculator = (props: Props) => {
     const [expression, setExpression] = useState<Expression>([])
-    const [result, setResult] = useState("")
+    const [result, setResult] = useState("0")
 
     return (
         <div className="flex flex-col justify-center m-10">
             <h1>Calculator</h1>
-            <div>{expression.join("") + result} :output</div>
+            <div>{expression.join("") + "=" + result} :output</div>
             <div className="grid grid-cols-4">
                 
                 <Button onClick={() => {
                     setExpression([])
-                    setResult("")
+                    setResult("0")
                 }}>AC</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => prevExpression.filter((value, index)=> index != (prevExpression.length-1)))
+                    setExpression(prevExpression => prevExpression.filter((_, index)=> index != (prevExpression.length-1)))
                 }}>del</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => [...prevExpression, "%"])
+                    setResult(prevResult => prevResult.includes("%") 
+                    ? "" + Calculate(expression)
+                    : parseFloat(prevResult)/100 + "%")
                 }}>%</Button>
                 <Button onClick={() => {
                     setExpression(prevExpression => [...prevExpression, "/"])
@@ -113,7 +115,7 @@ const Calculator = (props: Props) => {
                     setExpression(prevExpression => [...prevExpression, "."])
                 }}>.</Button>
                 <Button onClick={
-                    () => setResult("=" + Calculate(expression))
+                    () => setResult("" + Calculate(expression))
                 }>=</Button>
                 
             </div>
