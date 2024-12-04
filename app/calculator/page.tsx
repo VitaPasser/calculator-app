@@ -8,16 +8,16 @@ type Expression = string[]
 
 const Calculate = (expression: Expression) => {
     const operators = new Map([
-        ['+', (x: number, y:number)=> x+y], 
-        ['-', (x: number, y:number)=> x-y],
         ['*', (x: number, y:number)=> x*y],
         ['/', (x: number, y:number)=> x/y],
+        ['+', (x: number, y:number)=> x+y], 
+        ['-', (x: number, y:number)=> x-y],
     ])
     const operatorsKeys = operators.keys().toArray().map((value)=> "\\"+value).join('')
     
     let result = 0
     const expression2 = expression[0] === '-' ? expression.join('') : ["+", ...expression].join('')
-    const getNumbers = expression2.split(new RegExp('['+operatorsKeys+']', 'gui'))
+    const getNumbers = expression2.split(new RegExp('['+operatorsKeys+'\(\)'+']', 'gui'))
                                   .filter((value)=> value !== "")
                                   .map((value) => parseFloat(value));
     const getOperators = expression2.split(new RegExp('[^'+operatorsKeys+']', 'gui'))
@@ -25,6 +25,13 @@ const Calculate = (expression: Expression) => {
     console.log(getNumbers)
     console.log(getOperators)
     
+    // let numbers2 = []
+    // operators.keys().toArray().forEach((value1) => {
+    //     getOperators.map((value2, index) => {
+    //         if (value1 === value2) index 
+    //     })
+    // })
+
     result = getNumbers.reduce((prevValue, value, index)=>{
         const op = operators.get(getOperators[index])
         let result = 0;
@@ -59,7 +66,7 @@ const Calculator = (props: Props) => {
                     : parseFloat(prevResult)/100 + "%")
                 }}>%</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => [...prevExpression, "/"])
+                    setExpression(prevExpression => ['(', ...prevExpression, ')', "/"])
                 }}>/</Button>
                 
                 <Button onClick={() => {
@@ -72,7 +79,7 @@ const Calculator = (props: Props) => {
                     setExpression(prevExpression => [...prevExpression, "3"])
                 }}>3</Button>
                 <Button onClick={() => {
-                    setExpression(prevExpression => [...prevExpression, "*"])
+                    setExpression(prevExpression => ['(', ...prevExpression, ')', "*"])
                 }}>*</Button>
                 
                 <Button onClick={() => {
