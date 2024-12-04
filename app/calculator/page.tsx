@@ -22,15 +22,6 @@ const Calculate = (expression: Expression) => {
                                   .map((value) => parseFloat(value));
     const getOperators = expression2.split(new RegExp('[^'+operatorsKeys+']', 'gui'))
                                     .filter((value)=> value !== "");
-    console.log(getNumbers)
-    console.log(getOperators)
-    
-    // let numbers2 = []
-    // operators.keys().toArray().forEach((value1) => {
-    //     getOperators.map((value2, index) => {
-    //         if (value1 === value2) index 
-    //     })
-    // })
 
     result = getNumbers.reduce((prevValue, value, index)=>{
         const op = operators.get(getOperators[index])
@@ -38,7 +29,6 @@ const Calculate = (expression: Expression) => {
         if (op !== undefined) result = op(prevValue, value)
         return result;
     }, 0)
-    console.log(result)
 
     return result
 }
