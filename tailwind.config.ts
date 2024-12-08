@@ -11,8 +11,15 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'outer-space': "#283637",
+        'sirocco': "#6D807E",
+        'corduroy': '#536162',
       },
+      fontFamily: {
+        jost: ['var(--font-jost)'],
+      }
     },
   },
+  darkMode: "class",
   plugins: [],
 } satisfies Config;
