@@ -1,4 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calculator app
+
+This app has:
+- base function calculator:
+    - input numbers
+    - make simple expression
+    - operators:
+        - sum
+        - minus
+        - divide
+        - multiply
+        - take 1% from number
+    - delete symbol (number or operator) from expression
+- change symbol first number
+- history
+- delete history and inputted expression
+- change to dark or white theme
+
 
 ## Getting Started
 
