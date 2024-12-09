@@ -17,6 +17,9 @@ export default {
       },
       fontFamily: {
         jost: ['var(--font-jost)'],
+      },
+      screens: {
+        'smh': { 'raw': '(min-height: 800px)' }
       }
     },
   },
