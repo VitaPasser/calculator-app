@@ -46,120 +46,108 @@ const Calculator = () => {
 
     return (
         <div>
-        {/* // <div className='flex justify-center items-center h-screen text-slate-600 dark:text-slate-500 bg-white dark:bg-outer-space font-jost'> */}
-            {/* <div className="flex flex-col justify-center max-w-96"> */}
-                {/*<div className='flex justify-between'>
-                    <button><RiMenu2Line className='text-3xl font-normal content-center' /></button>
-                    <div className='flex'>
-                        <button className='rounded-full text-2xl font-medium bg-emerald-600 dark:bg-neutral-50 p-2 px-4 text-neutral-50 dark:text-emerald-600'>Calculator</button>
-                        <button className='rounded-full text-2xl font-medium p-2 px-4'>Converter</button>
-                    </div>
-                    <SwitcherTheme className='text-3xl' />
-                </div> */}
-                <div className='flex flex-col justify-end items-end h-[14em]'>
-                    {history.filter((_, index) => history.length - 5 < index).map((value, key) =>
-                        <div className="flex text-3xl font-normal" key={key}>{value}</div>)}
-                    <div className="text-7xl font-semibold text-black dark:text-neutral-50">{expression.join("")}</div>
-                </div>
-                <div className="mt-0 sm:mt-10 md:mt-20 grid grid-cols-4 gap-2">
+            <div className='flex flex-col justify-end items-end h-[14em]'>
+                {history.filter((_, index) => history.length - 5 < index).map((value, key) =>
+                    <div className="flex text-3xl font-normal" key={key}>{value}</div>)}
+                <div className="text-7xl font-semibold text-black dark:text-neutral-50">{expression.join("")}</div>
+            </div>
+            <div className="mt-0 sm:mt-10 md:mt-20 grid grid-cols-4 gap-2">
 
-                    <NumButton className='dark:bg-sirocco' onClick={() => {
-                        setExpression(["0"]); setHistory([])
-                    }}>AC</NumButton>
-                    <NumButton className='dark:bg-sirocco' onClick={() =>
-                        expression.length === 1
-                            ? setExpression(["0"])
-                            : setExpression(prevExpression => prevExpression.filter((_, index) => index != (prevExpression.length - 1)))
-                    }><FaDeleteLeft /></NumButton>
-                    <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() =>
-                        setExpression(prevExpression => prevExpression[prevExpression.length - 1] === "%"
-                            ? (parseFloat(prevExpression.filter((_, index) => prevExpression.length - 1 !== index).join("")) * 100 + "").split("")
-                            : (parseFloat(prevExpression.join("")) / 100 + "%").split(""))
-                    }>%</Button>
-                    <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
-                        setExpression(prevExpression => ['(', ...prevExpression, ')', "/"])
-                    }}>/</Button>
+                <NumButton className='dark:bg-sirocco' onClick={() => {
+                    setExpression(["0"]); setHistory([])
+                }}>AC</NumButton>
+                <NumButton className='dark:bg-sirocco' onClick={() =>
+                    expression.length === 1
+                        ? setExpression(["0"])
+                        : setExpression(prevExpression => prevExpression.filter((_, index) => index != (prevExpression.length - 1)))
+                }><FaDeleteLeft /></NumButton>
+                <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() =>
+                    setExpression(prevExpression => prevExpression[prevExpression.length - 1] === "%"
+                        ? (parseFloat(prevExpression.filter((_, index) => prevExpression.length - 1 !== index).join("")) * 100 + "").split("")
+                        : (parseFloat(prevExpression.join("")) / 100 + "%").split(""))
+                }>%</Button>
+                <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
+                    setExpression(prevExpression => ['(', ...prevExpression, ')', "/"])
+                }}>/</Button>
 
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["1"])
-                            : setExpression(prevExpression => [...prevExpression, "1"])
-                    }>1</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["2"])
-                            : setExpression(prevExpression => [...prevExpression, "2"])
-                    }>2</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["3"])
-                            : setExpression(prevExpression => [...prevExpression, "3"])
-                    }>3</NumButton>
-                    <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
-                        setExpression(prevExpression => ['(', ...prevExpression, ')', "*"])
-                    }}>*</Button>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["1"])
+                        : setExpression(prevExpression => [...prevExpression, "1"])
+                }>1</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["2"])
+                        : setExpression(prevExpression => [...prevExpression, "2"])
+                }>2</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["3"])
+                        : setExpression(prevExpression => [...prevExpression, "3"])
+                }>3</NumButton>
+                <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
+                    setExpression(prevExpression => ['(', ...prevExpression, ')', "*"])
+                }}>*</Button>
 
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["4"])
-                            : setExpression(prevExpression => [...prevExpression, "4"])
-                    }>4</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["5"])
-                            : setExpression(prevExpression => [...prevExpression, "5"])
-                    }>5</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["6"])
-                            : setExpression(prevExpression => [...prevExpression, "6"])
-                    }>6</NumButton>
-                    <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
-                        setExpression(prevExpression => [...prevExpression, "-"])
-                    }}>-</Button>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["4"])
+                        : setExpression(prevExpression => [...prevExpression, "4"])
+                }>4</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["5"])
+                        : setExpression(prevExpression => [...prevExpression, "5"])
+                }>5</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["6"])
+                        : setExpression(prevExpression => [...prevExpression, "6"])
+                }>6</NumButton>
+                <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
+                    setExpression(prevExpression => [...prevExpression, "-"])
+                }}>-</Button>
 
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["7"])
-                            : setExpression(prevExpression => [...prevExpression, "7"])
-                    }>7</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["8"])
-                            : setExpression(prevExpression => [...prevExpression, "8"])
-                    }>8</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["9"])
-                            : setExpression(prevExpression => [...prevExpression, "9"])
-                    }>9</NumButton>
-                    <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
-                        setExpression(prevExpression => [...prevExpression, "+"])
-                    }}>+</Button>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["7"])
+                        : setExpression(prevExpression => [...prevExpression, "7"])
+                }>7</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["8"])
+                        : setExpression(prevExpression => [...prevExpression, "8"])
+                }>8</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["9"])
+                        : setExpression(prevExpression => [...prevExpression, "9"])
+                }>9</NumButton>
+                <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
+                    setExpression(prevExpression => [...prevExpression, "+"])
+                }}>+</Button>
 
-                    <NumButton onClick={() => {
-                        setExpression(prevExpression =>
-                            prevExpression.length === 0 || (prevExpression[0] !== '-') ?
-                                ['-', ...prevExpression] :
-                                prevExpression.filter((_, index) => index !== 0)
-                        )
-                    }}>+/-</NumButton>
-                    <NumButton onClick={() =>
-                        expression.length === 1 && (expression[0] === "0")
-                            ? setExpression(["0"])
-                            : setExpression(prevExpression => [...prevExpression, "0"])
-                    }>0</NumButton>
-                    <NumButton className='dark:text-emerald-50' onClick={() => {
-                        setExpression(prevExpression => [...prevExpression, "."])
-                    }}>.</NumButton>
-                    <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
-                        setHistory(prevHistory => [...prevHistory, expression]);
-                        setExpression(Calculate(expression).toString().split(""));
-                    }}>=</Button>
+                <NumButton onClick={() => {
+                    setExpression(prevExpression =>
+                        prevExpression.length === 0 || (prevExpression[0] !== '-') ?
+                            ['-', ...prevExpression] :
+                            prevExpression.filter((_, index) => index !== 0)
+                    )
+                }}>+/-</NumButton>
+                <NumButton onClick={() =>
+                    expression.length === 1 && (expression[0] === "0")
+                        ? setExpression(["0"])
+                        : setExpression(prevExpression => [...prevExpression, "0"])
+                }>0</NumButton>
+                <NumButton className='dark:text-emerald-50' onClick={() => {
+                    setExpression(prevExpression => [...prevExpression, "."])
+                }}>.</NumButton>
+                <Button className='text-emerald-600 dark:bg-neutral-50' onClick={() => {
+                    setHistory(prevHistory => [...prevHistory, expression]);
+                    setExpression(Calculate(expression).toString().split(""));
+                }}>=</Button>
 
-                </div>
-            {/* </div> */}
-        {/* // </div> */}
+            </div>
         </div >
     )
 }
